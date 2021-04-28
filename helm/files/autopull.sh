@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-# echck aws erc access
+echo "check AWS ECR access"
 ecr=$(aws ecr get-login  --region "$AWS_REGION"|awk '{print $9}'|cut -d/ -f3)
 
 while true; do
@@ -15,7 +15,7 @@ while true; do
           echo "inspecting $pod..."
           echo curernt latest image sha256 is "$id" aws sha256 is "$sha"
           if [[ $id != $sha ]]; then
-            echo restarting pod. ImagePullPolicy should be set to Always
+            echo "Restarting pod. ImagePullPolicy should be set to Always..."
             kubectl delete pod "$pod"
           fi
         done

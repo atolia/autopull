@@ -27,7 +27,7 @@ spec:
       - name: autopull
         env:
         - name: AWS_REGION
-          value: 'eu-central-1'
+          value: {{ .Values.region }}
         image: atolia/alpine-kubectl-awscli-docker
         imagePullPolicy: Always
         volumeMounts:
