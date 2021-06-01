@@ -28,6 +28,8 @@ spec:
         env:
         - name: AWS_REGION
           value: {{ .Values.region }}
+        - name: TAGS
+          value: {{ .Values.tagsToWatch }}
         image: atolia/alpine-kubectl-awscli-docker
         imagePullPolicy: Always
         volumeMounts:
