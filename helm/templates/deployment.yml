@@ -21,10 +21,11 @@ spec:
     metadata:
       labels:
         app: autopull
-        ver: 0.0.16
     spec:
+      serviceAccountName: {{ .Release.Name }}-serviceaccount
       containers:
-      - name: autopull
+      - 
+        name: autopull
         env:
         - name: AWS_REGION
           value: {{ .Values.region }}
