@@ -1,3 +1,7 @@
 replicas: 1
-region: eu-central-1
-tagsToWatch: latest dev staging
+
+vars:
+  AWS_REGION: eu-central-1
+  TAGS: latest dev staging
+  DEBUG: "true"
+  SLEEP: 10

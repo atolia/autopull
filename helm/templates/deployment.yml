@@ -27,10 +27,8 @@ spec:
       - 
         name: autopull
         env:
-        - name: AWS_REGION
-          value: {{ .Values.region }}
-        - name: TAGS
-          value: {{ .Values.tagsToWatch }}
+        {{ include "common.vars" . | indent 8 }}
+
         image: atolia/alpine-kubectl-awscli-docker
         imagePullPolicy: Always
         volumeMounts:

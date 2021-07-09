@@ -5,6 +5,7 @@ set -eo pipefail
 echo "check AWS ECR access"
 ecr=$(aws ecr get-login  --region "$AWS_REGION"|awk '{print $9}'|cut -d/ -f3)
 
+
 doit(){ tag=$1
   # ger pairs "pod repo/name sha256" of all containers having $1 tag
   kubectl get pods -ojson | \
@@ -21,11 +22,14 @@ doit(){ tag=$1
       done
 }
 
+
+[ "$DEBUG" != "true" ] && exec > /dev/null
+
 while true; do
   for i in $TAGS; do
     echo "===== $i tag ====="
     doit $i
   done
   echo "sleeping..."
-  sleep 5
+  sleep "$SLEEP"
 done
