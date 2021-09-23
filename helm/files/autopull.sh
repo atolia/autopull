@@ -2,9 +2,10 @@
 
 set -eo pipefail
 
-echo "check AWS ECR access"
-ecr=$(aws ecr get-login  --region "$AWS_REGION"|awk '{print $9}'|cut -d/ -f3)
-
+echo "Checking AWS ECR access..."
+ecr=$(aws ecr get-login --region "$AWS_REGION"|awk '{print $9}'|cut -d/ -f3)
+echo "OK.
+ATTENTION: ImagePullPolicy should be set to Always to pull image on Pod restart."
 
 doit(){ tag=$1
   # ger pairs "pod repo/name sha256" of all containers having $1 tag
@@ -16,7 +17,7 @@ doit(){ tag=$1
         echo "inspecting $pod..."
         echo "curernt $tag image sha256 is $id aws sha256 is $sha"
         if [[ $id != $sha ]]; then
-          echo "Restarting pod. ImagePullPolicy should be set to Always..."
+          echo "Restarting $pod ... " >&2
           kubectl delete pod "$pod"
         fi
       done
