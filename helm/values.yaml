@@ -1,5 +1,5 @@
 replicas: 1
-
+image: ghcr.io/atolia/alpine-kubectl-awscli-docker/image:latest
 vars:
   AWS_REGION: eu-central-1
   TAGS: latest dev staging

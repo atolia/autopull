@@ -29,7 +29,7 @@ spec:
         env:
         {{ include "common.vars" . | indent 8 }}
 
-        image: atolia/alpine-kubectl-awscli-docker
+        image: {{ .Values.image }}
         imagePullPolicy: Always
         volumeMounts:
         - name: sh
