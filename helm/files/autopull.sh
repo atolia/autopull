@@ -10,7 +10,7 @@ ATTENTION: ImagePullPolicy should be set to Always to pull image on Pod restart.
 doit(){ tag=$1
   # ger pairs "pod repo/name sha256" of all containers having $1 tag
   kubectl get pods -ojson | \
-    jq '.items[] | "pod=" + .metadata.name + (.status.containerStatuses| .[]|select(.image|test("'$ecr'.*:'$tag'$")) | " image=" + (.image|split("/")[1:]|join("/")|split(":")[0]) + " id=" + (.imageID|split(":")[2])) ' -r | \
+    jq '.items[] | "pod=" + .metadata.name + (.status.containerStatuses[]?|select(.image|test("'$ecr'.*:'$tag'$")) | " image=" + (.image|split("/")[1:]|join("/")|split(":")[0]) + " id=" + (.imageID|split(":")[2])) ' -r | \
       while read li; do eval $li
         sha=$(aws ecr list-images --repository-name "$image" --region "$AWS_REGION" | \
           jq '.imageIds[] | select(.imageTag=="'$tag'")|.imageDigest|split(":")[1]' -r)
